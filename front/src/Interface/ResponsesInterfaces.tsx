@@ -4,7 +4,8 @@ export interface LoginResponseInterface {
     status: StatusType,
     message?: string,
     token?: string,
-    email?: string
+    email?: string,
+    username?: string
 }
 
 export interface ReviewPostResponseInterface {

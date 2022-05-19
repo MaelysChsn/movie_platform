@@ -1,8 +1,6 @@
 import {ReviewInterface} from "../Interface/ResponsesInterfaces";
 
 export default function Review({review}: { review: ReviewInterface }) {
-    console.log(review);
-
     return (
         <>
             {review !== [] ?

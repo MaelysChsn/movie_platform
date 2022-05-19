@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from "react"
+import React, {useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import useRegister from "../Hooks/register.tsx";
 import useLogin from "../Hooks/login.tsx";
 import {LocalUserInterface} from "../Interface/LocalUserInterface";
@@ -19,6 +20,8 @@ export default function FormLogin({setLoggedUser}: LoginFormPropsInterface){
   const register = useRegister();
   const [cookies, setCookie] = useCookies(['user']);
 
+  const navigate = useNavigate();
+
 
   const [localUser, setLocalUser] = useState<LocalUserInterface>({email: "", password: "", username: ""})
   const [needsLogin, setNeedsLogin] = useState<boolean>(true)
@@ -33,26 +36,27 @@ export default function FormLogin({setLoggedUser}: LoginFormPropsInterface){
 
   useEffect(() => {
         if (needsLogin && localUser.email !== '') {
-            console.log('login ?')
+            console.log('login ?', localUser.email);
             login(localUser.email, localUser.password, localUser.username)
                 .then(data => {
+                    setLoggedUser(data);
                     handleCookies(data.email, data.token);
                     if(data.status !== 'error'){
-                      window.location.href = "http://localhost:3000/";
+                      navigate('/');
                     }else{
                       alert(data.message);
                     }
                 })
         } else if (!needsLogin && localUser.email !== '') {
-            console.log('register ?', localUser.email)
-            register(localUser.email, localUser.password, localUser.usernme)
+            console.log('register ?', localUser.username)
+            register(localUser.email, localUser.password, localUser.username)
                 .then(data => {
                   setLoggedUser(data);
                   if(data.status !== 'error'){
                     setNeedsLogin(true);
                     setFormInput({email: "", password: "", username: ""})
                   }else{
-                    alert(data.message);
+                    console.log(data);
                   }
                 })
         }
@@ -79,11 +83,17 @@ export default function FormLogin({setLoggedUser}: LoginFormPropsInterface){
         <div className="c-container">
             <form className='mx-auto' style={{maxWidth: '350px'}} onSubmit={handleSubmit}>
                 <h2 className='mb-3 text-center'>{needsLogin ? 'Please Log In' : 'Please Register'}</h2>
-                <div className="form-floating mb-3">
-                    <input type="text" className="form-control" id="floatingInput" placeholder="mama"
-                           name='username' onChange={handleChange} value={formInput.usernme}/>
-                    <label htmlFor="floatingInput">Username</label>
-                </div>
+                {
+                    !needsLogin ?
+                    <div className="form-floating mb-3">
+                        <input type="text" className="form-control" id="floatingInput" placeholder="mama"
+                               name='username' onChange={handleChange} value={formInput.username}/>
+                        <label htmlFor="floatingInput">Username</label>
+                    </div>
+                    :
+                    null
+                }
+
                 <div className="form-floating mb-3">
                     <input type="text" className="form-control" id="floatingInput" placeholder="mama@gmail.com"
                            name='email' onChange={handleChange} value={formInput.email}/>

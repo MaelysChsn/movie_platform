@@ -9,10 +9,11 @@ $email = $_REQUEST['email'] ?? '';
 $username = $_REQUEST['username'] ?? '';
 $password = $_REQUEST['password'] ?? '';
 
-if (!$email || !$password) {
+if (!$email || !$password || !$username) {
     echo json_encode([
         'status' => 'error',
-        'message' => 'email or password parameters missing'
+        'message' => 'email or password or username parameters missing',
+        'username' => $username
     ]);
     exit;
 }

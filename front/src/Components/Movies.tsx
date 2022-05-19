@@ -2,7 +2,6 @@ import {MovieInterface} from "../Interface/ResponsesInterfaces";
 import { Link } from "react-router-dom";
 
 export default function Movies({movies}: { movies: MovieInterface }) {
-    console.log(movies);
     return (
         <div className='col-sm bg_light rounded'>
             <img src={require(`../assets/images/films/${movies.affiche}`)} width="300px"/>

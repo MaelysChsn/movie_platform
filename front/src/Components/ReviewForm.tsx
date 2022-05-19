@@ -23,11 +23,9 @@ export default function ReviewForm({loggedUser, setNeedsUpdate, id}: ReviewFormP
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        console.log(localReview);
         if (loggedUser.token != null) {
             postReview(loggedUser.token, localReview)
                 .then(data => {
-                    console.log(data)
                     setLocalReview({comment: "", movie_id: id})
                     setNeedsUpdate(true);
                 })

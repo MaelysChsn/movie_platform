@@ -37,7 +37,6 @@ export default function MoviesSingle({loggedUser, setLoggedUser, theme}) {
         })
     }, [needsUpdate])
 
-    console.log('movie', movie);
 
 
 

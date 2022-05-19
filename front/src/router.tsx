@@ -42,6 +42,8 @@ export default function Router({}){
         }
     }, [])
 
+  console.log('theme', theme);
+
   return(
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyles />

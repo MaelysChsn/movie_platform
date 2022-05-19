@@ -22,7 +22,6 @@ export default function Nav({setTheme, theme, setLoggedUser, loggedUser}){
       removeCookie("user");
   }
 
-  console.log('user', loggedUser);
 
   return(
     <nav className={`navbar navbar-expand-lg navbar-light ${theme}`}>
