@@ -41,8 +41,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `token`) VALUES
-(1, 'admin@gmail.com', 'password', '9HrAiHTTjIELY65qfWNlMNXFBwDJsUUJxwSD6Jh5qVJlNb7xys'),
-(2, 'mama@gmail.com', 'mama', 'XPHmnXllnXIq4Q4FLFUg3MwuhhcL8WWdxYOrCmKQlZp4opeZyJ');
+(1, 'admin@gmail.com', '$2y$10$X9zyXKFGfBm4atKnboq3dO5InRmRLgxnYvzXkxD4Uw3RjBHPOGCoi', '9HrAiHTTjIELY65qfWNlMNXFBwDJsUUJxwSD6Jh5qVJlNb7xys'),
+(2, 'mama@gmail.com', '$2y$10$X9zyXKFGfBm4atKnboq3dO5InRmRLgxnYvzXkxD4Uw3RjBHPOGCoi', 'XPHmnXllnXIq4Q4FLFUg3MwuhhcL8WWdxYOrCmKQlZp4opeZyJ');
 
 -- --------------------------------------------------------
 
@@ -80,18 +80,24 @@ CREATE TABLE `movies` (
   `name` varchar(255) NOT NULL,
   `creator` varchar(255) NOT NULL,
   `published` datetime NOT NULL,
-  `affiche` varchar(255) NOT NULL
+  `affiche` varchar(255) NOT NULL,
+  `description` varchar(1000) NOT NULL,
+  `stars` int(1) NOT NULL DEFAULT 0
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `movies`
 --
 
-INSERT INTO `movies` (`id`, `name`, `creator`, `published`, `affiche`) VALUES
-(1, "E.T", 'Jean Carin', '2013-02-08 09:10:02', 'ET.jpeg'),
-(2, "Avatar", 'James Cameron', '2009-03-04 13:10:02', 'avatar.jpeg'),
-(3, "Les Tuches", 'Jérome Richard', '2012-04-28 19:10:02', 'tuches.jpeg'),
-(4, "Twilight", 'Marine Buttler', '2006-07-15 16:10:02', 'twilight.jpeg');
+INSERT INTO `movies` (`id`, `name`, `creator`, `published`, `affiche`, `description`, `stars`) VALUES
+(1, "E.T", 'Steven Spielberg', '1982-12-01 09:10:02', 'ET.jpeg', "Une soucoupe volante atterrit en pleine nuit près de Los Angeles. Quelques extraterrestres, envoyés sur Terre en mission d'exploration botanique, sortent de l'engin, mais un des leurs s'aventure au-delà de la clairière où se trouve la navette. Celui-ci se dirige alors vers la ville. C'est sa première découverte de la civilisation humaine. Bientôt traquée par des militaires et abandonnée par les siens, cette petite créaturevapeurée se nommant E.T. se réfugie dans une résidence de banlieue. Elliot, un garçon de dix ans, le découvre et lui construit un abri dans son armoire. Rapprochés par un échange télépathique, les deux êtres ne tardent pas à devenir amis. Aidé par sa soeur Gertie et son frère aîné Michael, Elliot va alors tenter de garder la présence d'E.T. secrète.", 4),
+(2, "Avatar", 'James Cameron', '2009-03-04 13:10:02', 'avatar.jpeg', "Malgré sa paralysie, Jake Sully, un ancien marine immobilisé dans un fauteuil roulant, est resté un combattant au plus profond de son être. Il est recruté pour se rendre à des années-lumière de la Terre, sur Pandora, où de puissants groupes industriels exploitent un minerai rarissime destiné à résoudre la crise énergétique sur Terre. Parce que l'atmosphère de Pandora est toxique pour les humains, ceux-ci ont créé le Programme Avatar, qui permet à des 'pilotes' humains de lier leur esprit à un avatar, un corps biologique commandé à distance, capable de survivre dans cette atmosphère létale. Ces avatars sont des hybrides créés génétiquement en croisant l'ADN humain avec celui des Na'vi, les autochtones de Pandora.
+Sous sa forme d'avatar, Jake peut de nouveau marcher. On lui confie une mission d'infiltration auprès des Na'vi, devenus un obstacle trop conséquent à l'exploitation du précieux minerai. Mais tout va changer lorsque Neytiri, une très belle Na'vi, sauve la vie de Jake...", 5),
+(3, "Les Tuches", 'Olivier Baroux', '2011-07-01 19:10:02', 'tuches.jpeg', "A Bouzolles, tout le monde connaît la famille Tuche. Jeff, Cathy et leurs trois enfants vivent du système D. Respectueuse de la philosophie Tuche, « l’homme n’est pas fait pour travailler », toute la famille s’emploie à être heureuse malgré le cruel manque de revenus.
+Leurs vies étaient toutes tracées. Ils seraient toujours pauvres, mais heureux. Mais un bouleversement va mettre en péril ce fragile équilibre. Les Tuche vont devenir riches, très riches. 100 millions d’euros gagnés à « L’Euroloterie » vont tout changer. Quitte à changer de vie, autant changer de lieu. Quoi de plus logique pour les Tuche que d’aller vivre à Monaco, là où Cathy a toujours rêvé d’habiter. Ils devront se faire accepter, s’intégrer dans leur nouvelle patrie, changer leurs habitudes sans changer leurs sentiments. La partie n’est pas gagnée pour cette famille qui a comme adage « Tuche pour un, Un pour Tuche ».", 4),
+(4, "TWILIGHT - CHAPITRE 1 : FASCINATION", 'Catherine Hardwicke', '2009-01-07 16:10:02', 'twilight.jpeg', "Isabella Swan, 17 ans, déménage à Forks, petite ville pluvieuse dans l'Etat de Washington, pour vivre avec son père. Elle s'attend à ce que sa nouvelle vie soit aussi ennuyeuse que la ville elle-même. Or, au lycée, elle est terriblement intriguée par le comportement d'une étrange fratrie, deux filles et trois garçons. Bella tombe follement amoureuse de l'un d'eux, Edward Cullen. Une relation sensuelle et dangereuse commence alors entre les deux jeunes gens : lorsque Isabella comprend que Edward est un vampire, il est déjà trop tard.", 2),
+(5, "SKYFALL", 'Sam Mendes', '2012-10-26 08:08:36', 'skyfall.jpeg', "Lorsque la dernière mission de Bond tourne mal, plusieurs agents infiltrés se retrouvent exposés dans le monde entier. Le MI6 est attaqué, et M est obligée de relocaliser l’Agence. Ces événements ébranlent son autorité, et elle est remise en cause par Mallory, le nouveau président de l’ISC, le comité chargé du renseignement et de la sécurité. Le MI6 est à présent sous le coup d’une double menace, intérieure et extérieure. Il ne reste à M qu’un seul allié de confiance vers qui se tourner : Bond. Plus que jamais, 007 va devoir agir dans l’ombre. Avec l’aide d’Eve, un agent de terrain, il se lance sur la piste du mystérieux Silva, dont il doit identifier coûte que coûte l’objectif secret et mortel…", 4),
+(6, "ALITA : BATTLE ANGEL", 'Robert Rodriguez', '2019-02-13 08:09:50', 'alita.jpeg', "Lorsqu’Alita se réveille sans aucun souvenir de qui elle est, dans un futur qu’elle ne reconnaît pas, elle est accueillie par Ido, un médecin qui comprend que derrière ce corps de cyborg abandonné, se cache une jeune femme au passé extraordinaire. Ce n’est que lorsque les forces dangereuses et corrompues qui gèrent la ville d’Iron City se lancent à sa poursuite qu’Alita découvre la clé de son passé - elle a des capacités de combat uniques, que ceux qui détiennent le pouvoir veulent absolument maîtriser. Si elle réussit à leur échapper, elle pourrait sauver ses amis, sa famille, et le monde qu’elle a appris à aimer.", 4);
 
 
 

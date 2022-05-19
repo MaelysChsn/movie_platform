@@ -25,5 +25,7 @@ export interface MovieInterface {
     name: string,
     creator: string,
     published: date,
-    affiche: string
+    affiche: string,
+    desciption: string,
+    stars: number
 }

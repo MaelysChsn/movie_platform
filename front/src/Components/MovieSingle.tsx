@@ -36,22 +36,27 @@ export default function MoviesSingle({loggedUser, setLoggedUser}) {
         })
     }, [needsUpdate])
 
+    console.log('movie', movie);
+
 
 
 
     return (
         <div className="c-container">
             <div className="row justify-content-between">
-                <div className='col-sm bg-light rounded'>
+                <div className='col-sm rounded c-movie'>
                     <img src={require(`../assets/images/films/${movie.affiche}`)} width="300px"/>
-                    <h3>{movie.name}</h3>
-                    <p>
-                        <small>
-                            Par : {movie.creator}
-                            <br/>
-                            Sortie le :{movie.date}
-                        </small>
-                    </p>
+                    <div>
+                      <h3>{movie.name}</h3>
+                      <p>
+                          <small>
+                              Par : {movie.creator}
+                              <br/>
+                              Sortie le :{movie.date}
+                          </small>
+                      </p>
+                      <p>{movie.description}</p>
+                    </div>
                 </div>
 
                 {

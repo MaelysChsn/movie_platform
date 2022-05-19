@@ -19,7 +19,9 @@ foreach ($query->fetchAll() as $post) {
         'name' => $post['name'],
         'creator' => $post['creator'],
         'published' => $post['published'],
-        'affiche' => $post['affiche']
+        'affiche' => $post['affiche'],
+        'description' => $post['description'],
+        'stars' => $post['stars']
     ];
 }
 

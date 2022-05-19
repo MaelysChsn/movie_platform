@@ -7,6 +7,8 @@ class Movie
     private string $creator;
     private string $published;
     private string $affiche;
+    private string $description;
+    private int $stars;
 
     /**
      * @return int
@@ -95,6 +97,42 @@ class Movie
     public function setAffiche(string $affiche): Movie
     {
         $this->affiche = $affiche;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     * @return Movie
+     */
+    public function setDescription(string $description): Movie
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStars(): int
+    {
+        return $this->stars;
+    }
+
+    /**
+     * @param int $stars
+     * @return Movie
+     */
+    public function setStars(int $stars): Movie
+    {
+        $this->stars = $stars;
         return $this;
     }
 
