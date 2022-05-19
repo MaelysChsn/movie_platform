@@ -3,9 +3,14 @@ import { useCookies } from "react-cookie";
 import logo from './assets/images/logo_imdb.svg';
 import { FaMoon } from 'react-icons/fa';
 import {FiLogOut} from 'react-icons/fi';
+import {useSelector, useDispatch} from 'react-redux';
+import {selectUser} from "./redux/userSlice";
+import logout from "./redux/userSlice";
 
 export default function Nav({setTheme, theme, setLoggedUser, loggedUser}){
 
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
 
   const [cookies, removeCookie] = useCookies(["user"]);
 
@@ -14,11 +19,7 @@ export default function Nav({setTheme, theme, setLoggedUser, loggedUser}){
   }
 
   const handleDisconnect = () => {
-      setLoggedUser({
-          status: 'error',
-          token: "",
-          username: ""
-      });
+      dispatch(logout());
       removeCookie("user");
   }
 
@@ -43,7 +44,7 @@ export default function Nav({setTheme, theme, setLoggedUser, loggedUser}){
             </label>
           </li>
           {
-            loggedUser.token === "" ?
+            user ?
               <li className="nav-item">
                 <Link to="/login" className="nav-link">Login</Link>
               </li>

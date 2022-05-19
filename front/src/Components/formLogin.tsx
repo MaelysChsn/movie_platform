@@ -14,7 +14,7 @@ interface LoginFormPropsInterface {
     setNeedsLogin: React.Dispatch<boolean>
 }
 
-export default function FormLogin({setLoggedUser}: LoginFormPropsInterface){
+export default function FormLogin({}: LoginFormPropsInterface){
 
   const login = useLogin();
   const register = useRegister();
@@ -40,8 +40,9 @@ export default function FormLogin({setLoggedUser}: LoginFormPropsInterface){
             login(localUser.email, localUser.password, localUser.username)
                 .then(data => {
                     setLoggedUser(data);
-                    handleCookies(data.email, data.token);
+
                     if(data.status !== 'error'){
+                      handleCookies(data.email, data.token);
                       navigate('/');
                     }else{
                       alert(data.message);
@@ -74,9 +75,6 @@ export default function FormLogin({setLoggedUser}: LoginFormPropsInterface){
         e.preventDefault();
         setLocalUser(formInput);
     }
-
-
-
 
 
     return (

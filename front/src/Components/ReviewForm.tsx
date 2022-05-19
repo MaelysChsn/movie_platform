@@ -2,17 +2,20 @@ import React, {useState} from "react";
 import {useParams} from 'react-router-dom';
 import {LocalReviewPost} from "../Interface/LocalReviewPost";
 import usePostReview from "../Hooks/postReview.tsx";
-import {ReviewInterface, LoginResponseInterface} from "../Interface/ResponsesInterfaces";
+import {ReviewInterface} from "../Interface/ResponsesInterfaces";
+import {selectUser} from "../redux/userSlice";
+import {useSelector} from 'react-redux';
 
 interface ReviewFormPropsInterface {
-    loggedUser: LoginResponseInterface,
     setNeedsUpdate: React.Dispatch<boolean>
 }
 
-export default function ReviewForm({loggedUser, setNeedsUpdate, id}: ReviewFormPropsInterface) {
+export default function ReviewForm({setNeedsUpdate, id}: ReviewFormPropsInterface) {
 
     const [localReview, setLocalReview] = useState<LocalReviewPost>({comment: "", movie_id: id})
     const postReview = usePostReview();
+
+    const user = useSelector(selectUser);
 
     const handleChange = ({target}: any) => {
         setLocalReview(prev => ({
@@ -23,8 +26,8 @@ export default function ReviewForm({loggedUser, setNeedsUpdate, id}: ReviewFormP
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        if (loggedUser.token != null) {
-            postReview(loggedUser.token, localReview)
+        if (user.token != null) {
+            postReview(user.token, localReview)
                 .then(data => {
                     setLocalReview({comment: "", movie_id: id})
                     setNeedsUpdate(true);

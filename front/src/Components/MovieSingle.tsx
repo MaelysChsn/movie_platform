@@ -6,24 +6,20 @@ import { Link } from "react-router-dom";
 import ReviewForm from './ReviewForm.tsx'
 import ReviewList from "./ReviewList.tsx";
 import getReview from "../Hooks/getReview.tsx";
-import {LocalUserInterface} from "../Interface/LocalUserInterface";
-import {LoginResponseInterface} from "../Interface/ResponsesInterfaces";
 import {AiFillStar} from 'react-icons/ai';
+import {selectUser} from "../redux/userSlice";
+import {useSelector} from 'react-redux';
 
 
 
-interface LoginFormPropsInterface {
-    setLocalUser: React.Dispatch<LocalUserInterface>
-}
 
-
-export default function MoviesSingle({loggedUser, setLoggedUser, theme}) {
+export default function MoviesSingle({theme}) {
 
     const {id} = useParams();
     const location = useLocation();
     const { movie } = location.state;
 
-
+    const user = useSelector(selectUser);
 
     const getReviewList = getReview();
     const [reviewList, setReviewList] = useState<ReviewInterface[]>([]);
@@ -86,7 +82,7 @@ export default function MoviesSingle({loggedUser, setLoggedUser, theme}) {
             <div className="c-review">
                 <ReviewList reviewList={reviewList} id={id}/>
                 {
-                    loggedUser.token !== "" ? <ReviewForm loggedUser={loggedUser} setNeedsUpdate={setNeedsUpdate} id={id}/> : <div className="not-logged"><Link to='/login'>Connectez-vous</Link> pour donner votre avis !!"</div>
+                    user ? <ReviewForm loggedUser={loggedUser} setNeedsUpdate={setNeedsUpdate} id={id}/> : <div className="not-logged"><Link to='/login'>Connectez-vous</Link> pour donner votre avis !!"</div>
                 }
             </div>
         </div>
