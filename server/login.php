@@ -29,6 +29,7 @@ if ($query->execute()) {
         echo json_encode([
             'status' => 'success',
             'email' => $user->getEmail(),
+            'email' => $user->getUsername(),
             'token' => $user->getToken()
         ]);
         exit;

@@ -20,11 +20,11 @@ export default function FormLogin({setLoggedUser}: LoginFormPropsInterface){
   const [cookies, setCookie] = useCookies(['user']);
 
 
-  const [localUser, setLocalUser] = useState<LocalUserInterface>({email: "", password: ""})
+  const [localUser, setLocalUser] = useState<LocalUserInterface>({email: "", password: "", username: ""})
   const [needsLogin, setNeedsLogin] = useState<boolean>(true)
   const [needsUpdate, setNeedsUpdate] = useState<boolean>(false)
 
-  const [formInput, setFormInput] = useState<LocalUserInterface>({email: "", password: ""})
+  const [formInput, setFormInput] = useState<LocalUserInterface>({email: "", password: "", username: ""})
 
   const handleCookies = (email, token) => {
     setCookie('hetic_email', email, { path: '/' });
@@ -34,7 +34,7 @@ export default function FormLogin({setLoggedUser}: LoginFormPropsInterface){
   useEffect(() => {
         if (needsLogin && localUser.email !== '') {
             console.log('login ?')
-            login(localUser.email, localUser.password)
+            login(localUser.email, localUser.password, localUser.username)
                 .then(data => {
                     handleCookies(data.email, data.token);
                     if(data.status !== 'error'){
@@ -45,12 +45,12 @@ export default function FormLogin({setLoggedUser}: LoginFormPropsInterface){
                 })
         } else if (!needsLogin && localUser.email !== '') {
             console.log('register ?', localUser.email)
-            register(localUser.email, localUser.password)
+            register(localUser.email, localUser.password, localUser.usernme)
                 .then(data => {
                   setLoggedUser(data);
                   if(data.status !== 'error'){
                     setNeedsLogin(true);
-                    setFormInput({email: "", password: ""})
+                    setFormInput({email: "", password: "", username: ""})
                   }else{
                     alert(data.message);
                   }
@@ -80,7 +80,12 @@ export default function FormLogin({setLoggedUser}: LoginFormPropsInterface){
             <form className='mx-auto' style={{maxWidth: '350px'}} onSubmit={handleSubmit}>
                 <h2 className='mb-3 text-center'>{needsLogin ? 'Please Log In' : 'Please Register'}</h2>
                 <div className="form-floating mb-3">
-                    <input type="text" className="form-control" id="floatingInput" placeholder="FrancisHuster"
+                    <input type="text" className="form-control" id="floatingInput" placeholder="mama"
+                           name='username' onChange={handleChange} value={formInput.usernme}/>
+                    <label htmlFor="floatingInput">Username</label>
+                </div>
+                <div className="form-floating mb-3">
+                    <input type="text" className="form-control" id="floatingInput" placeholder="mama@gmail.com"
                            name='email' onChange={handleChange} value={formInput.email}/>
                     <label htmlFor="floatingInput">Email</label>
                 </div>

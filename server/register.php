@@ -4,9 +4,9 @@ require_once 'headers.php';
 require_once 'Classes/PDOFactory.php';
 require_once 'Classes/TokenHelper.php';
 require_once 'Classes/User.php';
-require_once 'Classes/CookieHelper.php';
 
 $email = $_REQUEST['email'] ?? '';
+$username = $_REQUEST['username'] ?? '';
 $password = $_REQUEST['password'] ?? '';
 
 if (!$email || !$password) {
@@ -33,10 +33,11 @@ if ($userAlreadyExists) {
     exit;
 }
 
-$insert = $pdo->prepare('INSERT INTO users (`email`, `password`, token) VALUES (:email, :password, :token)');
+$insert = $pdo->prepare('INSERT INTO users (`email`, `password`, token, `username`) VALUES (:email, :password, :token, :username)');
 $insert->bindValue('email', $email, PDO::PARAM_STR);
 $insert->bindValue('password', password_hash($password, PASSWORD_BCRYPT), PDO::PARAM_STR);
 $insert->bindValue('token', TokenHelper::buildToken(), PDO::PARAM_STR);
+$insert->bindValue('username', $username, PDO::PARAM_STR);
 
 if ($insert->execute()) {
     $lastInsertId = $pdo->lastInsertId();
@@ -45,11 +46,10 @@ if ($insert->execute()) {
     /** @var User $newUser */
     $newUser = $return->fetch();
 
-    CookieHelper::setCookie($newUser->getToken(), $newUser->getEmail());
-
     echo json_encode([
         'status' => 'success',
         'email' => $newUser->getEmail(),
+        'username' => $newUser->getUsername(),
         'token' => $newUser->getToken()
     ]);
     exit;

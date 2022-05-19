@@ -8,7 +8,7 @@ require_once 'Classes/Review.php';
 
 $pdo = (new PDOFactory())->getPdo();
 
-$query = $pdo->query('SELECT * FROM `review` ORDER BY `date`');
+$query = $pdo->query('SELECT review.id, review.user_id, review.movie_id, review.comment, review.date, users.username, users.id FROM `review`, `users` WHERE review.user_id = users.id ORDER BY `date`');
 
 $query->setFetchMode(PDO::FETCH_ASSOC);
 
@@ -19,7 +19,7 @@ foreach ($query->fetchAll() as $post) {
 //    var_dump($post);
     $res[] = [
         'id' => $post['id'],
-        'user_id' => $post['user_id'],
+        'username' => $post['username'],
         'movie_id' => $post['movie_id'],
         'comment' => $post['comment'],
         'date' => $post['date']

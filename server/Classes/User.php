@@ -6,6 +6,7 @@ class User
     private string $email;
     private string $password;
     private string $token;
+    private string $username;
 
 
     /**
@@ -76,6 +77,24 @@ class User
     public function setId(int $id): User
     {
         $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param string $username
+     * @return User
+     */
+    public function setUsername(string $username): User
+    {
+        $this->username = $username;
         return $this;
     }
 
