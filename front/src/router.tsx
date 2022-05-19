@@ -26,8 +26,7 @@ export default function Router({}){
   const [theme, setTheme] = useState("light");
 
    const cookies = useCookies();
-
-
+   const dispatch = useDispatch();
 
 
   useEffect(() => {
