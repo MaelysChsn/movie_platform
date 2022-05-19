@@ -4,11 +4,6 @@
 require_once 'headers.php';
 require_once 'Classes/PDOFactory.php';
 require_once 'Classes/User.php';
-require_once 'Classes/CookieHelper.php';
-
-setcookie('hetic_token', "8daf9e44517aa27246553ff109c053c0744e25cd33d7e051c92f7be36b93909361b3490cc5734f20fbc4f1039807cb4b5ece", time() + 1000, '/');
-setcookie('hetic_email', "admin@gmail.com", time() + 1000, '/');
-
 
 $email = $_SERVER['PHP_AUTH_USER'] ?? '';
 $password = $_SERVER['PHP_AUTH_PW'] ?? '';
@@ -28,6 +23,8 @@ if ($query->execute()) {
     /** @var User $user */
     $user = $query->fetch();
     if ($user && password_verify($password, $user->getPassword())) {
+
+
 
         echo json_encode([
             'status' => 'success',

@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from "react"
-import useCookies from "../Hooks/getCookies.tsx";
 import useRegister from "../Hooks/register.tsx";
 import useLogin from "../Hooks/login.tsx";
 import {LocalUserInterface} from "../Interface/LocalUserInterface";
 import {LoginResponseInterface} from "../Interface/ResponsesInterfaces";
-
+import { useCookies } from 'react-cookie';
 
 
 
@@ -14,80 +13,65 @@ interface LoginFormPropsInterface {
     setNeedsLogin: React.Dispatch<boolean>
 }
 
-export default function FormLogin(LoginFormPropsInterface){
+export default function FormLogin({setLoggedUser}: LoginFormPropsInterface){
 
   const login = useLogin();
   const register = useRegister();
-  const cookies = useCookies();
+  const [cookies, setCookie] = useCookies(['user']);
 
-
-
-  const [loggedUser, setLoggedUser] = useState<LoginResponseInterface>({
-        status: 'error',
-        token: "",
-        email: ""
-  })
 
   const [localUser, setLocalUser] = useState<LocalUserInterface>({email: "", password: ""})
   const [needsLogin, setNeedsLogin] = useState<boolean>(true)
   const [needsUpdate, setNeedsUpdate] = useState<boolean>(false)
 
   const [formInput, setFormInput] = useState<LocalUserInterface>({email: "", password: ""})
-    useEffect(() => {
-      console.log('cookies', cookies)
-          if (Object.keys(cookies).includes('hetic_token') && Object.keys(cookies).includes('hetic_email')) {
-              console.log('got cookies !', loggedUser)
-              setLoggedUser(prev => ({
-                  ...prev,
-                  email: cookies.hetic_email,
-                  token: cookies.hetic_token
-              }))
-          }
-      }, [loggedUser])
 
-      useEffect(() => {
+  const handleCookies = (email, token) => {
+    setCookie('hetic_email', email, { path: '/' });
+    setCookie('hetic_token', token, { path: '/' });
+  };
 
-            if (needsLogin && localUser.email !== '') {
-                console.log('login ?')
-                login(localUser.email, localUser.password)
-                    .then(data => {
-                      console.log(data);
-                        setLoggedUser(data);
-                        if(data.status !== 'error'){
-
-                        }else{
-                          alert(data.message);
-                        }
-                    })
-            } else if (!needsLogin && localUser.email !== '') {
-                console.log('register ?', localUser.email)
-                register(localUser.email, localUser.password)
-                    .then(data => {
-                      setLoggedUser(data);
-                      console.log(data);
-                      if(data.status !== 'error'){
-                        setNeedsLogin(true);
-                        setFormInput({email: "", password: ""})
-                      }else{
-                        alert(data.message);
-                      }
-
-                    })
-            }
-        }, [localUser])
-
-
-        const handleChange = ({target}: any) => {
-            setFormInput(prev => ({
-                ...prev,
-                [target.name]: target.value
-            }))
+  useEffect(() => {
+        if (needsLogin && localUser.email !== '') {
+            console.log('login ?')
+            login(localUser.email, localUser.password)
+                .then(data => {
+                    handleCookies(data.email, data.token);
+                    if(data.status !== 'error'){
+                      window.location.href = "http://localhost:3000/";
+                    }else{
+                      alert(data.message);
+                    }
+                })
+        } else if (!needsLogin && localUser.email !== '') {
+            console.log('register ?', localUser.email)
+            register(localUser.email, localUser.password)
+                .then(data => {
+                  setLoggedUser(data);
+                  if(data.status !== 'error'){
+                    setNeedsLogin(true);
+                    setFormInput({email: "", password: ""})
+                  }else{
+                    alert(data.message);
+                  }
+                })
         }
+    }, [localUser])
 
-        const handleSubmit = (e: any) => {
-            e.preventDefault();
-            setLocalUser(formInput);
-        }
+
+    const handleChange = ({target}: any) => {
+        setFormInput(prev => ({
+            ...prev,
+            [target.name]: target.value
+        }))
+    }
+
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+        setLocalUser(formInput);
+    }
+
+
 
 
 

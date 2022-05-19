@@ -8,7 +8,7 @@ import ReviewList from "./ReviewList.tsx";
 import getReview from "../Hooks/getReview.tsx";
 import {LocalUserInterface} from "../Interface/LocalUserInterface";
 import {LoginResponseInterface} from "../Interface/ResponsesInterfaces";
-import useCookies from "../Hooks/getCookies.tsx";
+
 
 
 interface LoginFormPropsInterface {
@@ -16,33 +16,18 @@ interface LoginFormPropsInterface {
 }
 
 
-export default function MoviesSingle({}) {
+export default function MoviesSingle({loggedUser, setLoggedUser}) {
 
     const {id} = useParams();
     const location = useLocation();
     const { movie } = location.state;
 
-    const [loggedUser, setLoggedUser] = useState<LoginResponseInterface>({
-           status: 'error',
-           token: "",
-           email: "admin@gmail.com"
-     })
-    const cookies = useCookies();
+
 
     const getReviewList = getReview();
     const [reviewList, setReviewList] = useState<ReviewInterface[]>([]);
     const [needsUpdate, setNeedsUpdate] = useState<boolean>(false);
 
-    useEffect(() => {
-          if (Object.keys(cookies).includes('hetic_token') && Object.keys(cookies).includes('hetic_email')) {
-              console.log('got cookies !', loggedUser)
-              setLoggedUser(prev => ({
-                  ...prev,
-                  email: cookies.hetic_email,
-                  token: cookies.hetic_token
-              }))
-          }
-      }, [])
 
     useEffect(() => {
       getReviewList().then(data => {
@@ -55,7 +40,7 @@ export default function MoviesSingle({}) {
 
 
     return (
-        <>
+        <div className="c-container">
             <div className="row justify-content-between">
                 <div className='col-sm bg-light rounded'>
                     <img src={require(`../assets/images/films/${movie.affiche}`)} width="300px"/>
@@ -79,7 +64,7 @@ export default function MoviesSingle({}) {
             <div className="row justify-content-between">
                 <ReviewList reviewList={reviewList} id={id}/>
             </div>
-        </>
+        </div>
 
     )
 }

@@ -32,7 +32,6 @@ export default function App() {
 
   return (
     <div className="App">
-
       <MovieList movieList={movieList}/>
     </div>
   );
