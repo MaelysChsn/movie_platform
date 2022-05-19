@@ -8,6 +8,7 @@ import ReviewList from "./ReviewList.tsx";
 import getReview from "../Hooks/getReview.tsx";
 import {LocalUserInterface} from "../Interface/LocalUserInterface";
 import {LoginResponseInterface} from "../Interface/ResponsesInterfaces";
+import {AiFillStar} from 'react-icons/ai';
 
 
 
@@ -16,7 +17,7 @@ interface LoginFormPropsInterface {
 }
 
 
-export default function MoviesSingle({loggedUser, setLoggedUser}) {
+export default function MoviesSingle({loggedUser, setLoggedUser, theme}) {
 
     const {id} = useParams();
     const location = useLocation();
@@ -42,7 +43,7 @@ export default function MoviesSingle({loggedUser, setLoggedUser}) {
 
 
     return (
-        <div className="c-container">
+        <div className={`c-container ${theme}`}>
             <div className="row justify-content-between">
                 <div className='col-sm rounded c-movie'>
                     <img src={require(`../assets/images/films/${movie.affiche}`)} width="300px"/>
@@ -50,24 +51,44 @@ export default function MoviesSingle({loggedUser, setLoggedUser}) {
                       <h3>{movie.name}</h3>
                       <p>
                           <small>
-                              Par : {movie.creator}
+                              <strong>Par</strong> : {movie.creator}
                               <br/>
-                              Sortie le :{movie.date}
+                              <strong>Sortie le:</strong> {movie.published}
                           </small>
                       </p>
                       <p>{movie.description}</p>
+                      <br/>
+                      <div>
+                        <h5>La note des spectateurs :</h5>
+                        <div>
+                           <span style={{marginRight:"10px"}}>
+                               {
+                                [...Array(movie.stars)].map((x, i) =>{
+                                    return(
+                                        <AiFillStar style={{ color: '#ffc107'}}/>
+                                )})
+
+                                }
+                            </span>
+                           <span>{movie.stars}/5</span>
+                         </div>
+                         <br/>
+                         <button className="btn btn-danger">Voir le film</button>
+
+                      </div>
                     </div>
                 </div>
 
-                {
-                    loggedUser.token !== "" ? <ReviewForm loggedUser={loggedUser} setNeedsUpdate={setNeedsUpdate} id={id}/> : "connecter vous pour donner votre avis !!"
-                }
+
             </div>
 
 
 
-            <div className="row justify-content-between">
+            <div className="c-review">
                 <ReviewList reviewList={reviewList} id={id}/>
+                {
+                    loggedUser.token !== "" ? <ReviewForm loggedUser={loggedUser} setNeedsUpdate={setNeedsUpdate} id={id}/> : <div className="not-logged"><Link to='/login'>Connectez-vous</Link> pour donner votre avis !!"</div>
+                }
             </div>
         </div>
 

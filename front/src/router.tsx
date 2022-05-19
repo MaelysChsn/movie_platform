@@ -49,9 +49,9 @@ export default function Router({}){
         <BrowserRouter>
             <Nav setTheme={setTheme} theme={theme} setLoggedUser={setLoggedUser} loggedUser={loggedUser}/>
             <Routes>
-              <Route path="/" element={<App />} />
-              <Route path="/movie/:id" element={<MoviesSingle setLoggedUser={setLoggedUser} loggedUser={loggedUser}/>} />
-              <Route path="/login" element={<Login setLoggedUser={setLoggedUser}/>} />
+              <Route path="/" element={<App theme={theme}/>} />
+              <Route path="/movie/:id" element={<MoviesSingle setLoggedUser={setLoggedUser} loggedUser={loggedUser} theme={theme}/>} />
+              <Route path="/login" element={<Login setLoggedUser={setLoggedUser} theme={theme}/>} />
             </Routes>
         </BrowserRouter>
       </CookiesProvider>

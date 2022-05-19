@@ -35,14 +35,14 @@ export default function ReviewForm({loggedUser, setNeedsUpdate, id}: ReviewFormP
     }
 
     return (
-        <form className='mx-auto' style={{maxWidth: '350px'}} onSubmit={handleSubmit}>
-            <h2 className='mb-3 text-center'>Envie de donner votre avis ?</h2>
+        <form className='mx-auto' style={{width:"70%"}} onSubmit={handleSubmit}>
+            <h4 className='mb-3 text-center'>Envie de donner votre avis ?</h4>
             <div className="mb-3 form-floating">
                 <textarea className="form-control" placeholder="Write here" id="floatingTextarea" name='comment'
                           style={{height: '100px'}} onChange={handleChange} value={localReview.comment}/>
                 <label htmlFor="floatingTextarea">Comment</label>
             </div>
-            <button type='submit' className='btn btn-primary w-100'>Poster </button>
+            <button type='submit' className='btn btn-warning w-100'>Poster </button>
         </form>
     )
 }

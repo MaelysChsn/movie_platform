@@ -25,7 +25,7 @@ export default function Nav({setTheme, theme, setLoggedUser, loggedUser}){
   console.log('user', loggedUser);
 
   return(
-    <nav className={`navbar navbar-expand-lg navbar-light bg-light ${theme}`}>
+    <nav className={`navbar navbar-expand-lg navbar-light ${theme}`}>
       <img src={logo} alt="" width="80px"/>
 
       <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
@@ -50,7 +50,7 @@ export default function Nav({setTheme, theme, setLoggedUser, loggedUser}){
               </li>
             :
               <li className="nav-item">
-                <Link to="/login" className="nav-link" onClick={() => handleDisconnect()}><FiLogOut /></Link>
+                <Link to="/login" className="nav-link" onClick={() => handleDisconnect()}>Logout <FiLogOut style={{marginLeft:"10px"}}/></Link>
               </li>
           }
         </ul>

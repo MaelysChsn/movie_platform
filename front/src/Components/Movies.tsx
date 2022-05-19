@@ -4,14 +4,15 @@ import { Link } from "react-router-dom";
 export default function Movies({movies}: { movies: MovieInterface }) {
     console.log(movies);
     return (
-        <div className='col-sm bg-light rounded'>
+        <div className='col-sm bg_light rounded'>
             <img src={require(`../assets/images/films/${movies.affiche}`)} width="300px"/>
-            <h3>{movies.name}</h3>
+
+            <h3 style={{marginTop:"20px"}}>{movies.name}</h3>
             <p>
                 <small>
-                    Par : {movies.creator}
+                    <strong>Par :</strong> {movies.creator}
                     <br/>
-                    Sortie le : {movies.published}
+                    <strong>Sortie le :</strong> {movies.published}
                 </small>
             </p>
 

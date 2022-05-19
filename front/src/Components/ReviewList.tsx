@@ -6,7 +6,7 @@ export default function ReviewList({reviewList, id}:{reviewList: ReviewInterface
 
     return (
         <div className='container'>
-            <h1 className='text-center mb-5'>Les Reviews</h1>
+            <h3 className='mb-4'>Les Reviews</h3>
             <div className="row justify-content-between">
                 {
                     reviewList.map((review: ReviewInterface) => (

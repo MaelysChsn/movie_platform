@@ -76,21 +76,23 @@ export default function FormLogin({setLoggedUser}: LoginFormPropsInterface){
 
 
     return (
-        <form className='mx-auto' style={{maxWidth: '350px'}} onSubmit={handleSubmit}>
-            <h2 className='mb-3 text-center'>{needsLogin ? 'Please Log In' : 'Please Register'}</h2>
-            <div className="form-floating mb-3">
-                <input type="text" className="form-control" id="floatingInput" placeholder="FrancisHuster"
-                       name='email' onChange={handleChange} value={formInput.email}/>
-                <label htmlFor="floatingInput">Email</label>
-            </div>
-            <div className="mb-3 form-floating">
-                <input type="password" className="form-control" id="floatingPassword" placeholder="Password"
-                       name='password' onChange={handleChange} value={formInput.password}/>
-                <label htmlFor="floatingPassword">Password</label>
-            </div>
-            <button type='submit' className='btn btn-primary w-100'>{needsLogin ? 'Login' : 'Register'}</button>
-            <button className='btn btn-warning mt-3 w-100'
-                    onClick={() => setNeedsLogin(!needsLogin)}>{needsLogin ? 'Register' : 'Login'} instead ?</button>
-        </form>
+        <div className="c-container">
+            <form className='mx-auto' style={{maxWidth: '350px'}} onSubmit={handleSubmit}>
+                <h2 className='mb-3 text-center'>{needsLogin ? 'Please Log In' : 'Please Register'}</h2>
+                <div className="form-floating mb-3">
+                    <input type="text" className="form-control" id="floatingInput" placeholder="FrancisHuster"
+                           name='email' onChange={handleChange} value={formInput.email}/>
+                    <label htmlFor="floatingInput">Email</label>
+                </div>
+                <div className="mb-3 form-floating">
+                    <input type="password" className="form-control" id="floatingPassword" placeholder="Password"
+                           name='password' onChange={handleChange} value={formInput.password}/>
+                    <label htmlFor="floatingPassword">Password</label>
+                </div>
+                <button type='submit' className='btn btn-primary w-100'>{needsLogin ? 'Login' : 'Register'}</button>
+                <button className='btn btn-warning mt-3 w-100'
+                        onClick={() => setNeedsLogin(!needsLogin)}>{needsLogin ? 'Register' : 'Login'} instead ?</button>
+            </form>
+        </div>
     )
 }

@@ -13,7 +13,7 @@ import getMovies from "./Hooks/getMovies.tsx";
 import useGetCookies from "./Hooks/useGetCookies";
 import useEraseCookie from "./Hooks/useEraseCookie";
 
-export default function App() {
+export default function App({theme}) {
 
   const getMovieList = getMovies();
 
@@ -31,7 +31,7 @@ export default function App() {
 
 
   return (
-    <div className="App">
+    <div className={`App ${theme}`}>
       <MovieList movieList={movieList}/>
     </div>
   );
