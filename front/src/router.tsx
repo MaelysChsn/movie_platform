@@ -12,8 +12,9 @@ import useCookies from "./Hooks/getCookies.tsx";
 import {LocalUserInterface} from "./Interface/LocalUserInterface.tsx";
 import {LoginResponseInterface} from "./Interface/ResponsesInterfaces.tsx";
 import {useDispatch} from "react-redux";
-import login from "./redux/userSlice";
-
+import {login} from "./redux/userSlice";
+import {selectUser} from "./redux/userSlice";
+import {useSelector} from 'react-redux';
 
 
 
@@ -28,30 +29,25 @@ export default function Router({}){
    const cookies = useCookies();
    const dispatch = useDispatch();
 
+   const user = useSelector(selectUser);
+   console.log('user', user);
 
-  useEffect(() => {
-        if (Object.keys(cookies).includes('hetic_token') && Object.keys(cookies).includes('hetic_email')) {
-            dispatch(login({
-               email: data.email,
-               token: data.token
-             }))
-        }
-    }, [])
 
 
   return(
-    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-      <GlobalStyles />
-      <CookiesProvider>
-        <BrowserRouter>
-            <Nav setTheme={setTheme} theme={theme}/>
-            <Routes>
-              <Route path="/" element={<App theme={theme}/>} />
-              <Route path="/movie/:id" element={<MoviesSingle theme={theme}/>} />
-              <Route path="/login" element={<Login theme={theme}/>} />
-            </Routes>
-        </BrowserRouter>
-      </CookiesProvider>
-    </ThemeProvider>
+
+      <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+        <GlobalStyles />
+        <CookiesProvider>
+          <BrowserRouter>
+              <Nav setTheme={setTheme} theme={theme}/>
+              <Routes>
+                <Route path="/" element={<App theme={theme}/>} />
+                <Route path="/movie/:id" element={<MoviesSingle theme={theme}/>} />
+                <Route path="/login" element={<Login theme={theme}/>} />
+              </Routes>
+          </BrowserRouter>
+        </CookiesProvider>
+      </ThemeProvider>
   )
 }

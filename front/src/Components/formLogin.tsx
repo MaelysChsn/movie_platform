@@ -5,7 +5,8 @@ import useLogin from "../Hooks/login.tsx";
 import {LocalUserInterface} from "../Interface/LocalUserInterface";
 import {LoginResponseInterface} from "../Interface/ResponsesInterfaces";
 import { useCookies } from 'react-cookie';
-
+import {useDispatch} from "react-redux";
+import login from "../redux/userSlice";
 
 
 interface LoginFormPropsInterface {
@@ -18,9 +19,10 @@ export default function FormLogin({}: LoginFormPropsInterface){
 
   const login = useLogin();
   const register = useRegister();
-  const [cookies, setCookie] = useCookies(['user']);
+  const [cookies, setCookies] = useCookies(['hetic_email', 'hetic_token']);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
 
   const [localUser, setLocalUser] = useState<LocalUserInterface>({email: "", password: "", username: ""})
@@ -30,8 +32,8 @@ export default function FormLogin({}: LoginFormPropsInterface){
   const [formInput, setFormInput] = useState<LocalUserInterface>({email: "", password: "", username: ""})
 
   const handleCookies = (email, token) => {
-    setCookie('hetic_email', email, { path: '/' });
-    setCookie('hetic_token', token, { path: '/' });
+    setCookies('hetic_email', email, { path: '/' });
+    setCookies('hetic_token', token, { path: '/' });
   };
 
   useEffect(() => {
@@ -39,10 +41,12 @@ export default function FormLogin({}: LoginFormPropsInterface){
             console.log('login ?', localUser.email);
             login(localUser.email, localUser.password, localUser.username)
                 .then(data => {
-                    setLoggedUser(data);
-
                     if(data.status !== 'error'){
                       handleCookies(data.email, data.token);
+                      dispatch(login({
+                         email: cookies.hetic_email,
+                         token: cookies.hetic_token
+                     }));
                       navigate('/');
                     }else{
                       alert(data.message);
@@ -52,7 +56,6 @@ export default function FormLogin({}: LoginFormPropsInterface){
             console.log('register ?', localUser.username)
             register(localUser.email, localUser.password, localUser.username)
                 .then(data => {
-                  setLoggedUser(data);
                   if(data.status !== 'error'){
                     setNeedsLogin(true);
                     setFormInput({email: "", password: "", username: ""})
@@ -62,7 +65,6 @@ export default function FormLogin({}: LoginFormPropsInterface){
                 })
         }
     }, [localUser])
-
 
     const handleChange = ({target}: any) => {
         setFormInput(prev => ({

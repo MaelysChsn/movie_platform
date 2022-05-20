@@ -12,15 +12,19 @@ export default function Nav({setTheme, theme, setLoggedUser, loggedUser}){
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
-  const [cookies, removeCookie] = useCookies(["user"]);
+  console.log('nav', user);
+
+
+  const [cookies, removeCookie] = useCookies(['hetic_email', 'hetic_token']);
 
   const themeToggle = () => {
     theme === 'light' ? setTheme("dark") : setTheme("light");
   }
 
   const handleDisconnect = () => {
-      dispatch(logout());
-      removeCookie("user");
+      console.log('disconet');
+      removeCookie('hetic_email', { path: '/' });
+      removeCookie('hetic_token', { path: '/' });
   }
 
 
@@ -44,13 +48,13 @@ export default function Nav({setTheme, theme, setLoggedUser, loggedUser}){
             </label>
           </li>
           {
-            user ?
+            !user ?
               <li className="nav-item">
                 <Link to="/login" className="nav-link">Login</Link>
               </li>
             :
               <li className="nav-item">
-                <Link to="/login" className="nav-link" onClick={() => handleDisconnect()}>Logout <FiLogOut style={{marginLeft:"10px"}}/></Link>
+                <Link to="/login" className="nav-link" onClick={handleDisconnect}>Logout <FiLogOut style={{marginLeft:"10px"}}/></Link>
               </li>
           }
         </ul>

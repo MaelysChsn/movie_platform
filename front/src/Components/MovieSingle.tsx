@@ -82,7 +82,7 @@ export default function MoviesSingle({theme}) {
             <div className="c-review">
                 <ReviewList reviewList={reviewList} id={id}/>
                 {
-                    user ? <ReviewForm loggedUser={loggedUser} setNeedsUpdate={setNeedsUpdate} id={id}/> : <div className="not-logged"><Link to='/login'>Connectez-vous</Link> pour donner votre avis !!"</div>
+                    user ? <ReviewForm  setNeedsUpdate={setNeedsUpdate} id={id}/> : <div className="not-logged"><Link to='/login'>Connectez-vous</Link> pour donner votre avis !!"</div>
                 }
             </div>
         </div>

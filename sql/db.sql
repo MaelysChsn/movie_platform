@@ -33,16 +33,17 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL
+  `token` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `password`, `token`) VALUES
-(1, 'admin@gmail.com', '$2y$10$X9zyXKFGfBm4atKnboq3dO5InRmRLgxnYvzXkxD4Uw3RjBHPOGCoi', '9HrAiHTTjIELY65qfWNlMNXFBwDJsUUJxwSD6Jh5qVJlNb7xys'),
-(2, 'mama@gmail.com', '$2y$10$X9zyXKFGfBm4atKnboq3dO5InRmRLgxnYvzXkxD4Uw3RjBHPOGCoi', 'XPHmnXllnXIq4Q4FLFUg3MwuhhcL8WWdxYOrCmKQlZp4opeZyJ');
+INSERT INTO `users` (`id`, `email`, `password`, `token`, `username`) VALUES
+(1, 'admin@gmail.com', '$2y$10$X9zyXKFGfBm4atKnboq3dO5InRmRLgxnYvzXkxD4Uw3RjBHPOGCoi', '9HrAiHTTjIELY65qfWNlMNXFBwDJsUUJxwSD6Jh5qVJlNb7xys', 'admin'),
+(2, 'mama@gmail.com', '$2y$10$X9zyXKFGfBm4atKnboq3dO5InRmRLgxnYvzXkxD4Uw3RjBHPOGCoi', 'XPHmnXllnXIq4Q4FLFUg3MwuhhcL8WWdxYOrCmKQlZp4opeZyJ', 'mama');
 
 -- --------------------------------------------------------
 
@@ -124,7 +125,8 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD KEY `email` (`email`),
   ADD KEY `password` (`password`),
-  ADD KEY `token` (`token`);
+  ADD KEY `token` (`token`),
+  ADD KEY `username` (`username`);
 
 
   --
