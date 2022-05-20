@@ -30,9 +30,16 @@ export default function Router({}){
    const dispatch = useDispatch();
 
    const user = useSelector(selectUser);
-   console.log('user', user);
 
-
+   useEffect(() => {
+       if (Object.keys(cookies).includes('hetic_token') && Object.keys(cookies).includes('hetic_email')) {
+           console.log('got cookies !')
+           dispatch(login({
+             email: cookies.hetic_email,
+             token: cookies.hetic_token,
+           }));
+       }
+     }, [])
 
   return(
 

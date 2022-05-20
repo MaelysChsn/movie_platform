@@ -6,7 +6,7 @@ import {LocalUserInterface} from "../Interface/LocalUserInterface";
 import {LoginResponseInterface} from "../Interface/ResponsesInterfaces";
 import { useCookies } from 'react-cookie';
 import {useDispatch} from "react-redux";
-import login from "../redux/userSlice";
+import {login} from "./redux/userSlice";
 
 
 interface LoginFormPropsInterface {
@@ -19,11 +19,10 @@ export default function FormLogin({}: LoginFormPropsInterface){
 
   const login = useLogin();
   const register = useRegister();
-  const [cookies, setCookies] = useCookies(['hetic_email', 'hetic_token']);
+  const [cookie, setCookie] = useCookies(['hetic_email', 'hetic_token']);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
+  const cookies = useCookies();
 
   const [localUser, setLocalUser] = useState<LocalUserInterface>({email: "", password: "", username: ""})
   const [needsLogin, setNeedsLogin] = useState<boolean>(true)
@@ -32,8 +31,8 @@ export default function FormLogin({}: LoginFormPropsInterface){
   const [formInput, setFormInput] = useState<LocalUserInterface>({email: "", password: "", username: ""})
 
   const handleCookies = (email, token) => {
-    setCookies('hetic_email', email, { path: '/' });
-    setCookies('hetic_token', token, { path: '/' });
+    setCookie('hetic_email', email, { path: '/' });
+    setCookie('hetic_token', token, { path: '/' });
   };
 
   useEffect(() => {
@@ -43,10 +42,6 @@ export default function FormLogin({}: LoginFormPropsInterface){
                 .then(data => {
                     if(data.status !== 'error'){
                       handleCookies(data.email, data.token);
-                      dispatch(login({
-                         email: cookies.hetic_email,
-                         token: cookies.hetic_token
-                     }));
                       navigate('/');
                     }else{
                       alert(data.message);

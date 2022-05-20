@@ -12,8 +12,6 @@ export default function Nav({setTheme, theme, setLoggedUser, loggedUser}){
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
-  console.log('nav', user);
-
 
   const [cookies, removeCookie] = useCookies(['hetic_email', 'hetic_token']);
 
@@ -22,6 +20,7 @@ export default function Nav({setTheme, theme, setLoggedUser, loggedUser}){
   }
 
   const handleDisconnect = () => {
+      dispatch(logout());
       console.log('disconet');
       removeCookie('hetic_email', { path: '/' });
       removeCookie('hetic_token', { path: '/' });
