@@ -15,7 +15,7 @@ interface LoginFormPropsInterface {
     setNeedsLogin: React.Dispatch<boolean>
 }
 
-export default function FormLogin({}: LoginFormPropsInterface){
+export default function FormLogin({setUpdate}: LoginFormPropsInterface){
 
   const login = useLogin();
   const register = useRegister();
@@ -23,6 +23,7 @@ export default function FormLogin({}: LoginFormPropsInterface){
 
   const navigate = useNavigate();
   const cookies = useCookies();
+  const dispatch = useDispatch();
 
   const [localUser, setLocalUser] = useState<LocalUserInterface>({email: "", password: "", username: ""})
   const [needsLogin, setNeedsLogin] = useState<boolean>(true)
@@ -42,6 +43,7 @@ export default function FormLogin({}: LoginFormPropsInterface){
                 .then(data => {
                     if(data.status !== 'error'){
                       handleCookies(data.email, data.token);
+                      setUpdate(true);
                       navigate('/');
                     }else{
                       alert(data.message);

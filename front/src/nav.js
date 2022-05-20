@@ -7,7 +7,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {selectUser} from "./redux/userSlice";
 import logout from "./redux/userSlice";
 
-export default function Nav({setTheme, theme, setLoggedUser, loggedUser}){
+export default function Nav({setTheme, theme, setUpdate}){
 
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
@@ -15,15 +15,18 @@ export default function Nav({setTheme, theme, setLoggedUser, loggedUser}){
 
   const [cookies, removeCookie] = useCookies(['hetic_email', 'hetic_token']);
 
+  console.log('user', user);
+
   const themeToggle = () => {
     theme === 'light' ? setTheme("dark") : setTheme("light");
   }
 
-  const handleDisconnect = () => {
+  const handleDisconnect = (e) => {
+      document.cookie = 'hetic_token'+'=; Max-Age=-99999999;';
+      document.cookie = 'hetic_email'+'=; Max-Age=-99999999;';
+      console.log('disconnect');
       dispatch(logout());
-      console.log('disconet');
-      removeCookie('hetic_email', { path: '/' });
-      removeCookie('hetic_token', { path: '/' });
+      setUpdate(false);
   }
 
 

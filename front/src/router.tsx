@@ -28,6 +28,7 @@ export default function Router({}){
 
    const cookies = useCookies();
    const dispatch = useDispatch();
+   const [update, setUpdate] = useState<boolean>(false)
 
    const user = useSelector(selectUser);
 
@@ -39,7 +40,7 @@ export default function Router({}){
              token: cookies.hetic_token,
            }));
        }
-     }, [])
+     }, [update])
 
   return(
 
@@ -47,11 +48,11 @@ export default function Router({}){
         <GlobalStyles />
         <CookiesProvider>
           <BrowserRouter>
-              <Nav setTheme={setTheme} theme={theme}/>
+              <Nav setTheme={setTheme} theme={theme} setUpdate={setUpdate}/>
               <Routes>
                 <Route path="/" element={<App theme={theme}/>} />
                 <Route path="/movie/:id" element={<MoviesSingle theme={theme}/>} />
-                <Route path="/login" element={<Login theme={theme}/>} />
+                <Route path="/login" element={<Login theme={theme} setUpdate={setUpdate}/> } />
               </Routes>
           </BrowserRouter>
         </CookiesProvider>
